@@ -4,7 +4,6 @@ const {
     removeReaction
 } = require('../controllers/reactionsController');
 
-// Necesitamos accesso al thoughtId para estas rutas, por eso usamos mergeParams
 router.route('/')
     .post(addReaction);
 

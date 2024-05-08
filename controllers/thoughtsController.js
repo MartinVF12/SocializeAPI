@@ -42,6 +42,28 @@ const thoughtsController = {
         Thought.findOneAndDelete({ _id: req.params.thoughtId })
             .then(thought => res.json({ message: 'Thought deleted successfully' }))
             .catch(err => res.status(404).json(err));
+    },
+
+    // Add a reaction to a thought
+    addReaction(req, res) {
+        Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $push: { reactions: req.body } },
+            { new: true }
+        )
+            .then(thought => res.json(thought))
+            .catch(err => res.status(400).json(err));
+    },
+
+    // Remove a reaction from a thought
+    removeReaction(req, res) {
+        Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
+            { new: true }
+        )
+            .then(thought => res.json(thought))
+            .catch(err => res.status(400).json(err));
     }
 };
 
